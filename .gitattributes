@@ -1,0 +1,8 @@
+* text=false
+
+*.chunk.js binary
+*.bundle.js binary
+*.bundle.css binary
+package-lock.json binary
+react_toolkit_loader.js binary
+

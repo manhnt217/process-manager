@@ -1,0 +1,14 @@
+/RemoteSystemsTempFiles
+/.recommenders/
+bin
+test-classes
+src-api-classes
+classes/
+node_modules/
+/.metadata
+*.code-workspace
+*.js.map
+*.css.map
+*.DS_Store
+
+.idea
