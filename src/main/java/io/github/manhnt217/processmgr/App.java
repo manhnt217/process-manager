@@ -1,11 +1,10 @@
-package io.github.manhnt217.progressmgr;
+package io.github.manhnt217.processmgr;
 
-import io.github.manhnt217.progressmgr.example.FooAction;
-import io.github.manhnt217.progressmgr.example.FooPolicy;
-import io.github.manhnt217.progressmgr.example.FooResource;
-import io.github.manhnt217.progressmgr.example.FooRunner;
-import io.github.manhnt217.progressmgr.process.ProcessControl;
-import io.github.manhnt217.progressmgr.process.ProcessManager;
+import io.github.manhnt217.processmgr.example.FooPolicy;
+import io.github.manhnt217.processmgr.example.FooResource;
+import io.github.manhnt217.processmgr.example.FooRunner;
+import io.github.manhnt217.processmgr.process.ProcessControl;
+import io.github.manhnt217.processmgr.process.ProcessManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class App {
 		List<ProcessControl> pcs = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			ProcessControl pc = processManager.allocate(new FooResource("fooRes"), new FooAction("doFoo"));
+			ProcessControl pc = processManager.allocate(new FooResource("fooRes"));
 			pc.setProcess(new FooRunner(i));
 			processManager.execute(pc);
 			pcs.add(pc);

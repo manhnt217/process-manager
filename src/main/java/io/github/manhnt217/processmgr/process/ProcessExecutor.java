@@ -1,4 +1,4 @@
-package io.github.manhnt217.progressmgr.process;
+package io.github.manhnt217.processmgr.process;
 
 import java.util.List;
 

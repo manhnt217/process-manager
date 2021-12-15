@@ -1,23 +1,17 @@
-package io.github.manhnt217.progressmgr.process;
+package io.github.manhnt217.processmgr.process;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author manhnt
  */
-public class Intent {
-	private final Action action;
+public class ResourceHolder {
 	private final Resource resource;
 	private final ReentrantLock lock;
 
-	public Intent(Action action, Resource resource) {
-		this.action = action;
+	public ResourceHolder(Resource resource) {
 		this.resource = resource;
 		this.lock = new ReentrantLock(true);
-	}
-
-	public Action getAction() {
-		return action;
 	}
 
 	public Resource getResource() {

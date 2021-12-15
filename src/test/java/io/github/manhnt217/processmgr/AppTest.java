@@ -1,4 +1,4 @@
-package io.github.manhnt217.progressmgr;
+package io.github.manhnt217.processmgr;
 
 import static org.junit.Assert.assertTrue;
 

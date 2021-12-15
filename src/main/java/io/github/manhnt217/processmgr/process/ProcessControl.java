@@ -1,5 +1,6 @@
-package io.github.manhnt217.progressmgr.process;
+package io.github.manhnt217.processmgr.process;
 
+import java.util.UUID;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -8,6 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ProcessControl {
 
+	private final String uuid;
 	private volatile boolean cancelRequest;
 	private volatile double completionRate;
 	private volatile Status status;
@@ -17,9 +19,14 @@ public class ProcessControl {
 	private final Condition doneCondition;
 
 	ProcessControl() {
+		this.uuid = UUID.randomUUID().toString();
 		this.status = Status.INITIALIZED;
 		this.lock = new ReentrantLock();
 		this.doneCondition = lock.newCondition();
+	}
+
+	public String getUuid() {
+		return uuid;
 	}
 
 	public Status getStatus() {

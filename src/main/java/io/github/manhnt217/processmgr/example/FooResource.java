@@ -1,6 +1,6 @@
-package io.github.manhnt217.progressmgr.example;
+package io.github.manhnt217.processmgr.example;
 
-import io.github.manhnt217.progressmgr.process.Resource;
+import io.github.manhnt217.processmgr.process.Resource;
 
 import java.util.Objects;
 
@@ -8,9 +8,25 @@ import java.util.Objects;
  * @author manhnt
  */
 public class FooResource implements Resource {
-	private final String name;
+	private String name;
+
+	public FooResource() {
+	}
 
 	public FooResource(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public Object getAttribute(String attrName) {
+		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
