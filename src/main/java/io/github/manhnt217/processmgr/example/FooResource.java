@@ -10,10 +10,10 @@ import java.util.Objects;
 public class FooResource implements Resource {
 	private String name;
 
-	public FooResource() {
-	}
+    public FooResource() {
+    }
 
-	public FooResource(String name) {
+    public FooResource(String name) {
 		this.name = name;
 	}
 
@@ -22,15 +22,15 @@ public class FooResource implements Resource {
 		return null;
 	}
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

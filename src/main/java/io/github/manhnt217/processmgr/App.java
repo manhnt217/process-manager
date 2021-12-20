@@ -20,9 +20,7 @@ public class App {
 		List<ProcessControl> pcs = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
-			ProcessControl pc = processManager.allocate(new FooResource("fooRes"));
-			pc.setProcess(new FooRunner(i));
-			processManager.execute(pc);
+			ProcessControl pc = processManager.execute(new FooResource("fooRes"), new FooRunner(i));
 			pcs.add(pc);
 		}
 

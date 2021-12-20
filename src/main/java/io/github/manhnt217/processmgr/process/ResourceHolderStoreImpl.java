@@ -58,12 +58,14 @@ class ResourceHolderStoreImpl implements ResourceHolderStore {
 	}
 
 	@Override
-	public void insert(ResourceHolder i) {
-		resourceHolders.add(i);
+	public synchronized ResourceHolder newHolder(Resource r) {
+        ResourceHolder holder = new ResourceHolder(r);
+        resourceHolders.add(holder);
+        return holder;
 	}
 
 	@Override
-	public void remove(ResourceHolder i) {
+	public synchronized void remove(ResourceHolder i) {
 		resourceHolders.remove(i);
 	}
 }

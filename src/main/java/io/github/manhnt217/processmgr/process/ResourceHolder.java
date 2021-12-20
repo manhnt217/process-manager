@@ -9,7 +9,7 @@ public class ResourceHolder {
 	private final Resource resource;
 	private final ReentrantLock lock;
 
-	public ResourceHolder(Resource resource) {
+	ResourceHolder(Resource resource) {
 		this.resource = resource;
 		this.lock = new ReentrantLock(true);
 	}

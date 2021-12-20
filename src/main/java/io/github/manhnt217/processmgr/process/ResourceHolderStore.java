@@ -14,7 +14,7 @@ public interface ResourceHolderStore {
 
 	Collection<ResourceHolder> searchByType(Class<? extends Resource> resourceType, boolean includeSubtype);
 
-	void insert(ResourceHolder i);
+	ResourceHolder newHolder(Resource r);
 
 	void remove(ResourceHolder i);
 }
