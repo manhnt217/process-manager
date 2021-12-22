@@ -1,41 +1,41 @@
 package io.github.manhnt217.processmgr.process;
 
-import io.github.manhnt217.processmgr.process.exception.*;
+import io.github.manhnt217.processmgr.process.dependency.ProcessDependency;
+import io.github.manhnt217.processmgr.process.exception.ProcessCanceledException;
 
-import java.util.*;
-import java.util.concurrent.locks.*;
+import java.util.UUID;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author manhnt
  */
-public class ProcessControl {
+public abstract class ProcessControl implements ProcessDependency {
 
     private final String uuid;
     private volatile boolean cancelRequest;
     private volatile double completionRate;
     private volatile Status status;
     private Object processResult;
-    private Process process;
     private final ReentrantLock lock;
     private final Condition doneCondition;
-    private ResourceHolder resourceHolder;
 
-    ProcessControl() {
+    public ProcessControl() {
         this.uuid = UUID.randomUUID().toString();
-         this.status = Status.INITIALIZED;
+        this.status = Status.INITIALIZED;
         this.lock = new ReentrantLock();
         this.doneCondition = lock.newCondition();
     }
 
-    public String getUuid() {
+    public final String getUuid() {
         return uuid;
     }
 
-    public Status getStatus() {
+    public final Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public final void setStatus(Status status) {
         lock.lock();
         try {
             this.status = status;
@@ -47,15 +47,16 @@ public class ProcessControl {
         }
     }
 
-    public double getCompletionRate() {
+    public final double getCompletionRate() {
         return completionRate;
     }
 
-    public void setCompletionRate(double completionRate) {
+    public final void setCompletionRate(double completionRate) {
         this.completionRate = completionRate;
     }
 
-    public void waitForDone() throws InterruptedException {
+    public final void waitForDone() throws InterruptedException {
+        if (status.isDone()) return;
         lock.lock();
         try {
             while (!status.isDone()) {
@@ -66,42 +67,23 @@ public class ProcessControl {
         }
     }
 
-    public synchronized void cancel() {
+    public final synchronized void cancel() {
         cancelRequest = true;
     }
 
-    public synchronized void cancelCheck() throws ProcessCanceledException {
+    public final synchronized void cancelCheck() throws ProcessCanceledException {
         if (cancelRequest) throw new ProcessCanceledException();
     }
 
-    public Object getResult() {
+    public final synchronized boolean isCanceled() {
+        return cancelRequest;
+    }
+
+    public final Object getResult() {
         return processResult;
     }
 
-    public void setResult(Object result) {
+    public final void setResult(Object result) {
         this.processResult = result;
-    }
-
-    public void setProcess(Process process) {
-        if (this.process != null) {
-            throw new IllegalStateException("This process control is already contain another process. Each process control can be used to run only one process");
-        }
-        this.process = process;
-    }
-
-    void run() {
-        this.process.run(this);
-    }
-
-    void setResourceHolder(ResourceHolder resourceHolder) {
-        this.resourceHolder = resourceHolder;
-    }
-
-    ResourceHolder getResourceHolder() {
-        return this.resourceHolder;
-    }
-
-    public String getResource() {
-        return resourceHolder.getResource().toString();
     }
 }

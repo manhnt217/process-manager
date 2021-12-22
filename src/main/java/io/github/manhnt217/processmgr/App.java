@@ -1,7 +1,5 @@
 package io.github.manhnt217.processmgr;
 
-import io.github.manhnt217.processmgr.example.FooPolicy;
-import io.github.manhnt217.processmgr.example.FooResource;
 import io.github.manhnt217.processmgr.example.FooRunner;
 import io.github.manhnt217.processmgr.process.ProcessControl;
 import io.github.manhnt217.processmgr.process.ProcessManager;
@@ -13,19 +11,19 @@ import java.util.List;
  * Hello world!
  */
 public class App {
-	public static void main(String[] args) throws InterruptedException {
-		ProcessManager processManager = ProcessManager.get();
-		processManager.registerPolicy(new FooPolicy());
+    public static void main(String[] args) throws InterruptedException {
+        ProcessManager processManager = ProcessManager.get();
 
-		List<ProcessControl> pcs = new ArrayList<>();
+        List<ProcessControl> pcs = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            ProcessControl pc = processManager.execute(new FooRunner(new String[]{"a"}));
+            pcs.add(pc);
+        }
 
-		for (int i = 0; i < 10; i++) {
-			ProcessControl pc = processManager.execute(new FooResource("fooRes"), new FooRunner(i));
-			pcs.add(pc);
-		}
+        for (ProcessControl pc : pcs) {
+            pc.waitForDone();
+        }
 
-		for (ProcessControl pc : pcs) {
-			pc.waitForDone();
-		}
-	}
+        processManager.shutdown();
+    }
 }
